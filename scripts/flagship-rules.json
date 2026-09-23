@@ -1,0 +1,439 @@
+[
+  {
+    "slug": "pm-kisan",
+    "benefitAmountAnnual": 6000,
+    "eligibility": [
+      {
+        "attribute": "occupation",
+        "operator": "eq",
+        "value": "farmer",
+        "plainLanguage": "You must be a farmer who owns cultivable land"
+      },
+      {
+        "attribute": "landOwnership",
+        "operator": "has",
+        "value": "cultivable land in own name",
+        "plainLanguage": "The land must be recorded in your name"
+      },
+      {
+        "attribute": "occupation",
+        "operator": "notHas",
+        "value": "government employee",
+        "plainLanguage": "Government employees are not eligible",
+        "isExclusion": true
+      },
+      {
+        "attribute": "other",
+        "operator": "notHas",
+        "value": "income tax payer",
+        "plainLanguage": "Income tax payers are not eligible",
+        "isExclusion": true
+      }
+    ],
+    "documentsRequired": [
+      "Aadhaar Card",
+      "Bank account (Aadhaar-linked)",
+      "Land ownership record (RTC/Pahani)"
+    ],
+    "applicationSteps": [
+      {
+        "order": 1,
+        "channel": "online",
+        "instruction": "Register on the PM-KISAN portal under 'New Farmer Registration'",
+        "url": "https://pmkisan.gov.in"
+      },
+      {
+        "order": 2,
+        "channel": "csc",
+        "instruction": "Or visit any Common Service Centre with your documents"
+      },
+      {
+        "order": 3,
+        "channel": "online",
+        "instruction": "Complete eKYC (OTP or biometric) to receive installments"
+      }
+    ]
+  },
+  {
+    "slug": "ab-pmjay",
+    "benefitAmountAnnual": 500000,
+    "eligibility": [
+      {
+        "attribute": "bplStatus",
+        "operator": "in",
+        "value": "SECC-2011 listed, ration card holder",
+        "plainLanguage": "Your household must be in the SECC-2011 deprivation list or hold an eligible ration card"
+      },
+      {
+        "attribute": "income",
+        "operator": "lte",
+        "value": "varies by state",
+        "plainLanguage": "Income limits vary — Karnataka uses the SECC/ration-card list, not a fixed income cutoff"
+      }
+    ],
+    "documentsRequired": [
+      "Aadhaar Card",
+      "Ration card"
+    ],
+    "applicationSteps": [
+      {
+        "order": 1,
+        "channel": "office",
+        "instruction": "Check eligibility at any Ayushman Bharat kiosk in a government hospital or CSC"
+      },
+      {
+        "order": 2,
+        "channel": "automatic",
+        "instruction": "If listed, your Ayushman card is generated on the spot — no premium, no paperwork beyond Aadhaar"
+      }
+    ]
+  },
+  {
+    "slug": "pmay-u",
+    "benefitAmountAnnual": 250000,
+    "eligibility": [
+      {
+        "attribute": "income",
+        "operator": "lte",
+        "value": "300000",
+        "plainLanguage": "Annual family income up to ₹3 lakh (EWS) — higher bands exist for LIG/MIG"
+      },
+      {
+        "attribute": "other",
+        "operator": "notHas",
+        "value": "pucca house",
+        "plainLanguage": "Your family must not own a pucca (permanent) house anywhere in India",
+        "isExclusion": true
+      },
+      {
+        "attribute": "residence",
+        "operator": "has",
+        "value": "urban area",
+        "plainLanguage": "Applies to urban areas — rural households see PMAY-Gramin instead"
+      }
+    ],
+    "documentsRequired": [
+      "Aadhaar Card",
+      "Income certificate",
+      "Residence proof",
+      "Bank account"
+    ],
+    "applicationSteps": [
+      {
+        "order": 1,
+        "channel": "online",
+        "instruction": "Apply on the PMAY-Urban portal under 'Citizen Assessment'",
+        "url": "https://pmaymis.gov.in"
+      },
+      {
+        "order": 2,
+        "channel": "office",
+        "instruction": "Or apply through your municipal corporation / urban local body"
+      }
+    ]
+  },
+  {
+    "slug": "pmuy2",
+    "benefitAmountAnnual": 1600,
+    "eligibility": [
+      {
+        "attribute": "gender",
+        "operator": "eq",
+        "value": "female",
+        "plainLanguage": "The applicant must be an adult woman"
+      },
+      {
+        "attribute": "bplStatus",
+        "operator": "has",
+        "value": "BPL household",
+        "plainLanguage": "Your household must be below the poverty line"
+      },
+      {
+        "attribute": "other",
+        "operator": "notHas",
+        "value": "existing LPG connection",
+        "plainLanguage": "Households that already have an LPG connection are not eligible",
+        "isExclusion": true
+      }
+    ],
+    "documentsRequired": [
+      "Aadhaar Card",
+      "BPL/ration card",
+      "Bank account",
+      "Passport photo"
+    ],
+    "applicationSteps": [
+      {
+        "order": 1,
+        "channel": "office",
+        "instruction": "Apply at any LPG distributor with the Ujjwala KYC form"
+      },
+      {
+        "order": 2,
+        "channel": "online",
+        "instruction": "Or apply online at pmuy.gov.in",
+        "url": "https://pmuy.gov.in"
+      }
+    ]
+  },
+  {
+    "slug": "pmjdy",
+    "benefitAmountAnnual": 0,
+    "eligibility": [
+      {
+        "attribute": "age",
+        "operator": "gte",
+        "value": "10",
+        "plainLanguage": "Any Indian citizen above 10 can open an account (minors with a guardian)"
+      },
+      {
+        "attribute": "other",
+        "operator": "notHas",
+        "value": "existing bank account",
+        "plainLanguage": "Meant for people without a bank account — existing account holders don't need it",
+        "isExclusion": true
+      }
+    ],
+    "documentsRequired": [
+      "Aadhaar Card",
+      "Passport photo"
+    ],
+    "applicationSteps": [
+      {
+        "order": 1,
+        "channel": "office",
+        "instruction": "Walk into any bank branch or Bank Mitra outlet — zero-balance account opens the same day"
+      }
+    ]
+  },
+  {
+    "slug": "pmmvy",
+    "benefitAmountAnnual": 5000,
+    "eligibility": [
+      {
+        "attribute": "gender",
+        "operator": "eq",
+        "value": "female",
+        "plainLanguage": "For pregnant and lactating women"
+      },
+      {
+        "attribute": "familyStatus",
+        "operator": "eq",
+        "value": "first living child",
+        "plainLanguage": "Applies to the first living child (second child if a girl, under PMMVY 2.0)"
+      },
+      {
+        "attribute": "age",
+        "operator": "gte",
+        "value": "19",
+        "plainLanguage": "Mother must be 19 or older"
+      },
+      {
+        "attribute": "employmentSector",
+        "operator": "notHas",
+        "value": "government job",
+        "plainLanguage": "Women in government employment (who get paid maternity leave) are excluded",
+        "isExclusion": true
+      }
+    ],
+    "documentsRequired": [
+      "Aadhaar Card",
+      "MCP card (mother-child protection)",
+      "Bank account",
+      "LMP/ANC registration proof"
+    ],
+    "applicationSteps": [
+      {
+        "order": 1,
+        "channel": "office",
+        "instruction": "Register at your Anganwadi centre or ASHA worker within 730 days of the child's birth"
+      },
+      {
+        "order": 2,
+        "channel": "online",
+        "instruction": "Or register on the PMMVY portal",
+        "url": "https://pmmvy.wcd.gov.in"
+      }
+    ]
+  },
+  {
+    "slug": "e-shram",
+    "benefitAmountAnnual": 200000,
+    "eligibility": [
+      {
+        "attribute": "age",
+        "operator": "between",
+        "value": "16-59",
+        "plainLanguage": "You must be between 16 and 59 years old"
+      },
+      {
+        "attribute": "employmentSector",
+        "operator": "eq",
+        "value": "informal",
+        "plainLanguage": "You must work in the unorganised/informal sector (construction, delivery, domestic work, street vending…)"
+      },
+      {
+        "attribute": "other",
+        "operator": "notHas",
+        "value": "EPFO member",
+        "plainLanguage": "EPFO members are not eligible",
+        "isExclusion": true
+      },
+      {
+        "attribute": "other",
+        "operator": "notHas",
+        "value": "income tax payer",
+        "plainLanguage": "Income tax payers are not eligible",
+        "isExclusion": true
+      }
+    ],
+    "documentsRequired": [
+      "Aadhaar Card",
+      "Mobile number linked to Aadhaar",
+      "Bank account"
+    ],
+    "applicationSteps": [
+      {
+        "order": 1,
+        "channel": "online",
+        "instruction": "Self-register on the e-Shram portal",
+        "url": "https://eshram.gov.in"
+      },
+      {
+        "order": 2,
+        "channel": "csc",
+        "instruction": "Or register free at any Common Service Centre"
+      }
+    ]
+  },
+  {
+    "slug": "karnataka-gruha-lakshmi",
+    "benefitAmountAnnual": 24000,
+    "eligibility": [
+      {
+        "attribute": "gender",
+        "operator": "eq",
+        "value": "female",
+        "plainLanguage": "The woman must be the head of the household (as listed on the ration card)"
+      },
+      {
+        "attribute": "residence",
+        "operator": "eq",
+        "value": "Karnataka",
+        "plainLanguage": "You must be a Karnataka resident"
+      },
+      {
+        "attribute": "bplStatus",
+        "operator": "in",
+        "value": "BPL, APL, Antyodaya",
+        "plainLanguage": "BPL, APL and Antyodaya ration-card households qualify"
+      },
+      {
+        "attribute": "other",
+        "operator": "notHas",
+        "value": "income tax payer",
+        "plainLanguage": "Income-tax-paying households are not eligible",
+        "isExclusion": true
+      },
+      {
+        "attribute": "occupation",
+        "operator": "notHas",
+        "value": "government employee",
+        "plainLanguage": "Government employee households are not eligible",
+        "isExclusion": true
+      }
+    ],
+    "documentsRequired": [
+      "Aadhaar Card",
+      "Ration card (woman listed as head)",
+      "Bank account (DBT-enabled)"
+    ],
+    "applicationSteps": [
+      {
+        "order": 1,
+        "channel": "online",
+        "instruction": "Register on the Seva Sindhu portal",
+        "url": "https://sevasindhu.karnataka.gov.in"
+      },
+      {
+        "order": 2,
+        "channel": "office",
+        "instruction": "Or visit a Grama One / Karnataka One / Bapuji Seva Kendra centre"
+      }
+    ]
+  },
+  {
+    "slug": "karnataka-yuva-nidhi",
+    "benefitAmountAnnual": 36000,
+    "eligibility": [
+      {
+        "attribute": "age",
+        "operator": "between",
+        "value": "18-25",
+        "plainLanguage": "You must be 18–25 years old"
+      },
+      {
+        "attribute": "residence",
+        "operator": "eq",
+        "value": "Karnataka",
+        "plainLanguage": "You must be a Karnataka resident"
+      },
+      {
+        "attribute": "education",
+        "operator": "in",
+        "value": "degree, diploma",
+        "plainLanguage": "You must hold a degree or diploma (2022-23 or later)"
+      },
+      {
+        "attribute": "employmentSector",
+        "operator": "notHas",
+        "value": "employed",
+        "plainLanguage": "You must be unemployed — the stipend stops if you get a job",
+        "isExclusion": true
+      }
+    ],
+    "documentsRequired": [
+      "Aadhaar Card",
+      "Degree/diploma certificate",
+      "Bank account",
+      "Ration card"
+    ],
+    "applicationSteps": [
+      {
+        "order": 1,
+        "channel": "online",
+        "instruction": "Register on the Seva Sindhu portal within 2 years of graduating",
+        "url": "https://sevasindhu.karnataka.gov.in"
+      }
+    ]
+  },
+  {
+    "slug": "karnataka-anna-bhagya",
+    "benefitAmountAnnual": 5000,
+    "eligibility": [
+      {
+        "attribute": "residence",
+        "operator": "eq",
+        "value": "Karnataka",
+        "plainLanguage": "You must be a Karnataka resident"
+      },
+      {
+        "attribute": "bplStatus",
+        "operator": "in",
+        "value": "BPL, Antyodaya",
+        "plainLanguage": "BPL and Antyodaya (priority) ration-card households qualify"
+      }
+    ],
+    "documentsRequired": [
+      "Ration card (BPL/Antyodaya)",
+      "Aadhaar Card"
+    ],
+    "applicationSteps": [
+      {
+        "order": 1,
+        "channel": "automatic",
+        "instruction": "No application — entitlements load automatically onto your ration card each month"
+      }
+    ]
+  }
+]

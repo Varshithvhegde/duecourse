@@ -1,0 +1,22 @@
+{
+  "name": "duecourse-studio",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "schema:deploy": "sanity schema deploy"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sanity": "^6.16.0",
+    "styled-components": "^6.5.3"
+  },
+  "devDependencies": {
+    "@sanity/cli": "^8.0.0",
+    "@types/node": "^26.6.2",
+    "typescript": "^5.6.0"
+  }
+}
