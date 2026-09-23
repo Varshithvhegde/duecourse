@@ -1,7 +1,8 @@
-# Entitled (हक़ / ಹಕ್ಕು) — know your right
+# Entitled — you're owed more than you think
 
-> **Entitled** means *"your right / what you're entitled to"* in Hindi, Urdu and Kannada.
-> India's welfare schemes are not charity — they are your entitled.
+> **Entitled** — (adj.) having a legal right to something.
+> India's welfare schemes are not charity. You are *entitled* to them.
+> This agent tells you exactly to what.
 
 An AI agent that tells Indian citizens which government welfare schemes they
 qualify for — in plain language, with citations — built on Sanity structured
