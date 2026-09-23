@@ -41,7 +41,7 @@ const STRINGS = {
     somethingWrong: 'Something went wrong',
     tooLong: 'The agent took too long — please try again.',
     disclaimer:
-      'DueCourse is an information tool, not legal or financial advice. Final eligibility is decided by the administering department.',
+      'Haqq is an information tool, not legal or financial advice. Final eligibility is decided by the administering department.',
     footer: 'Built on Sanity structured content — every claim links to its official source.',
     schemesFound: 'schemes matched to you',
     disqualifiedBy: 'Disqualifying rule',
@@ -49,7 +49,7 @@ const STRINGS = {
     followUpPlaceholder: 'e.g. What about scholarships for my daughters?',
     followUpCta: 'Ask',
     whatsapp: 'Share on WhatsApp',
-    whatsappHeader: '*My welfare scheme results (DueCourse)*',
+    whatsappHeader: '*My welfare scheme results (Haqq)*',
   },
   kn: {
     tagline: 'ಭಾರತದಲ್ಲಿ 4,700+ ಕಲ್ಯಾಣ ಯೋಜನೆಗಳಿವೆ',
@@ -87,7 +87,7 @@ const STRINGS = {
     somethingWrong: 'ಏನೋ ತಪ್ಪಾಗಿದೆ',
     tooLong: 'ಏಜೆಂಟ್ ಹೆಚ್ಚು ಸಮಯ ತೆಗೆದುಕೊಂಡಿತು — ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.',
     disclaimer:
-      'DueCourse ಒಂದು ಮಾಹಿತಿ ಸಾಧನ, ಕಾನೂನು ಅಥವಾ ಹಣಕಾಸು ಸಲಹೆಯಲ್ಲ. ಅಂತಿಮ ಅರ್ಹತೆಯನ್ನು ಸಂಬಂಧಪಟ್ಟ ಇಲಾಖೆ ನಿರ್ಧರಿಸುತ್ತದೆ.',
+      'Haqq ಒಂದು ಮಾಹಿತಿ ಸಾಧನ, ಕಾನೂನು ಅಥವಾ ಹಣಕಾಸು ಸಲಹೆಯಲ್ಲ. ಅಂತಿಮ ಅರ್ಹತೆಯನ್ನು ಸಂಬಂಧಪಟ್ಟ ಇಲಾಖೆ ನಿರ್ಧರಿಸುತ್ತದೆ.',
     footer: 'Sanity ರಚನಾತ್ಮಕ ವಿಷಯದ ಮೇಲೆ ನಿರ್ಮಿತ — ಪ್ರತಿ ಹೇಳಿಕೆ ಅಧಿಕೃತ ಮೂಲಕ್ಕೆ ಸಂಪರ್ಕ ಹೊಂದಿದೆ.',
     schemesFound: 'ಯೋಜನೆಗಳು ನಿಮಗೆ ಹೊಂದಿಕೆಯಾದವು',
     disqualifiedBy: 'ಅನರ್ಹಗೊಳಿಸುವ ನಿಯಮ',
@@ -95,7 +95,7 @@ const STRINGS = {
     followUpPlaceholder: 'ಉದಾ: ನನ್ನ ಮಗಳಿಗೆ ವಿದ್ಯಾರ್ಥಿವೇತನ ಇದೆಯೇ?',
     followUpCta: 'ಕೇಳಿ',
     whatsapp: 'WhatsApp ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ',
-    whatsappHeader: '*ನನ್ನ ಕಲ್ಯಾಣ ಯೋಜನೆ ಫಲಿತಾಂಶಗಳು (DueCourse)*',
+    whatsappHeader: '*ನನ್ನ ಕಲ್ಯಾಣ ಯೋಜನೆ ಫಲಿತಾಂಶಗಳು (Haqq)*',
   },
 } as const
 

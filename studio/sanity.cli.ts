@@ -8,5 +8,5 @@ export default defineCliConfig({
   deployment: {
     appId: 'zuib9fypfy70r18nlquaiva0',
   },
-  studioHost: 'duecourse',
+  studioHost: 'haqq',
 })
