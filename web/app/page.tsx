@@ -85,10 +85,10 @@ function App() {
       <header className="mx-auto flex max-w-3xl items-center justify-between px-5 pt-6">
         <div className="flex items-center gap-2.5">
           <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-stone-900 font-display text-sm font-bold text-amber-300">
-            हक़
+            E
           </span>
           <span className="font-display text-lg font-semibold tracking-tight text-stone-900">
-            Haqq
+            Entitled
           </span>
         </div>
         <LangToggle />

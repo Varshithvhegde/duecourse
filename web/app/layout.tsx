@@ -2,7 +2,7 @@ import './globals.css'
 import type {Metadata} from 'next'
 
 export const metadata: Metadata = {
-  title: 'Haqq — know what you are owed',
+  title: 'Entitled — you are owed more than you think',
   description:
     'Find the Indian government welfare schemes you qualify for, in plain language, with official sources.',
 }

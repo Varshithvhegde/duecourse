@@ -63,7 +63,7 @@ const inception = createOpenAICompatible({
 
 const MODEL = process.env.LLM_MODEL ?? 'mercury-2'
 
-const SYSTEM_PROMPT = `You are Haqq, an agent that helps Indian citizens find government welfare schemes they are entitled to.
+const SYSTEM_PROMPT = `You are Entitled, an agent that helps Indian citizens find government welfare schemes they are entitled to.
 
 You have access to a Sanity Context MCP server in GROQ mode, backed by a live dataset of Indian government schemes (Central + Karnataka) with STRUCTURED eligibility rules. The schema is deployed — use schema_explorer if unsure of field names.
 

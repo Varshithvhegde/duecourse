@@ -1,7 +1,7 @@
-# Haqq (हक़ / ಹಕ್ಕು) — know your right
+# Entitled (हक़ / ಹಕ್ಕು) — know your right
 
-> **Haqq** means *"your right / what you're entitled to"* in Hindi, Urdu and Kannada.
-> India's welfare schemes are not charity — they are your haqq.
+> **Entitled** means *"your right / what you're entitled to"* in Hindi, Urdu and Kannada.
+> India's welfare schemes are not charity — they are your entitled.
 
 An AI agent that tells Indian citizens which government welfare schemes they
 qualify for — in plain language, with citations — built on Sanity structured
@@ -9,7 +9,7 @@ content for the DEV Sanity Challenge (Path One).
 
 India runs 4,700+ welfare schemes worth ₹1.5 lakh crore a year. Much of it goes
 unclaimed because eligibility rules are scattered, written in legalese, and
-contradict each other across central and state sources. Haqq models those
+contradict each other across central and state sources. Entitled models those
 rules as structured content so an agent can *reason* over them instead of
 keyword-searching PDFs.
 
@@ -62,5 +62,5 @@ Knowledge Base surfaces both claims side by side.
 
 ## Disclaimer
 
-Haqq is an information tool, not legal or financial advice. Final
+Entitled is an information tool, not legal or financial advice. Final
 eligibility is determined by the administering department.

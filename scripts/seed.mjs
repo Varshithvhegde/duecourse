@@ -1,5 +1,5 @@
 /**
- * Haqq seed script
+ * Entitled seed script
  *
  * Pulls Indian welfare schemes into the Sanity dataset:
  *   1. Bulk list from the API Mitra mirror of myScheme (filterable, fast)
