@@ -135,16 +135,43 @@ interface AgentAnswer {
 }
 
 function extractJson(text: string): AgentAnswer | null {
-  try {
-    // tolerate ```json fences or leading/trailing prose
-    const match = text.match(/\{[\s\S]*\}/)
-    if (!match) return null
-    const parsed = JSON.parse(match[0])
-    if (!Array.isArray(parsed.schemes)) return null
-    return parsed as AgentAnswer
-  } catch {
-    return null
+  // tolerate ```json fences or leading/trailing prose
+  const match = text.match(/\{[\s\S]*\}/)
+  if (!match) return null
+  const candidate = match[0]
+
+  const attempt = (s: string): AgentAnswer | null => {
+    try {
+      const parsed = JSON.parse(s)
+      if (!Array.isArray(parsed.schemes)) return null
+      return parsed as AgentAnswer
+    } catch {
+      return null
+    }
   }
+
+  // 1) as-is
+  const direct = attempt(candidate)
+  if (direct) return direct
+
+  // 2) light repairs for common LLM-JSON malformations:
+  //    - unquoted bare values inside arrays (e.g. [ ಿನಿಮ್ಮ ... ])
+  //    - trailing commas before ] or }
+  //    - smart quotes
+  const repaired = candidate
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'")
+    .replace(/,\s*([}\]])/g, '$1')
+    // quote bare (non-JSON-token) array elements: [ foo bar ] → [ "foo bar" ]
+    .replace(/\[\s*([^"{[\]\s][^,\]\n]*?)\s*(,|\])/g, (_m, val, close) => {
+      const trimmed = String(val).trim()
+      if (!trimmed || /^[-\d.]/.test(trimmed) || /^(true|false|null)$/.test(trimmed)) {
+        return `[ ${trimmed}${close}`
+      }
+      return `["${trimmed.replace(/"/g, '\\"')}"${close}`
+    })
+
+  return attempt(repaired)
 }
 
 export async function POST(req: Request) {
@@ -208,13 +235,19 @@ export async function POST(req: Request) {
     )
 
     try {
+      // Keep the answer's language, but with strict JSON discipline: every
+      // string quoted, no trailing commas. The repair-tolerant extractor
+      // below handles residual malformations.
+      const jsonDiscipline = lang === 'kn'
+        ? 'Write the JSON string VALUES in Kannada (scheme names stay in English). CRITICAL: every string must be wrapped in double quotes, arrays contain only quoted strings, no trailing commas.'
+        : 'CRITICAL: every string must be wrapped in double quotes, arrays contain only quoted strings, no trailing commas.'
       const final = await generateText({
         model: inception(MODEL),
-        system: 'You reformat eligibility answers into strict JSON.' + languageNote,
+        system: 'You reformat eligibility answers into strict, valid JSON.',
         messages: [
           {
             role: 'user',
-            content: `The citizen asked: "${message}"\n\nThe eligibility agent's answer:\n${agentAnswer}\n\n${FORMAT_PROMPT}${languageNote}`,
+            content: `The citizen asked: "${message}"\n\nThe eligibility agent's answer:\n${agentAnswer}\n\n${FORMAT_PROMPT}\n\n${jsonDiscipline}`,
           },
         ],
       })
