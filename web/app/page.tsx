@@ -10,6 +10,13 @@ import SchemeCard from '../components/SchemeCard'
 import ResultHero from '../components/ResultHero'
 import ProgressStages from '../components/ProgressStages'
 import LangToggle from '../components/LangToggle'
+import FollowUp from '../components/FollowUp'
+import WhatsAppShare from '../components/WhatsAppShare'
+
+interface Turn {
+  role: 'user' | 'assistant'
+  content: string
+}
 
 function App() {
   const {t, lang} = useLang()
@@ -18,13 +25,17 @@ function App() {
   const [fallbackAnswer, setFallbackAnswer] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [history, setHistory] = useState<Turn[]>([])
 
-  async function check(text: string) {
+  async function check(text: string, isFollowUp = false) {
     if (loading || !text.trim()) return
     setLoading(true)
-    setResult(null)
-    setFallbackAnswer('')
     setError('')
+    if (!isFollowUp) {
+      setResult(null)
+      setFallbackAnswer('')
+      setHistory([])
+    }
 
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), 150_000)
@@ -33,7 +44,7 @@ function App() {
       const res = await fetch('/api/check', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({message: text, lang}),
+        body: JSON.stringify({message: text, lang, history: isFollowUp ? history : []}),
         signal: controller.signal,
       })
       const raw = await res.text()
@@ -44,6 +55,13 @@ function App() {
         throw new Error(`Server returned ${res.status} with an unreadable response`)
       }
       if (!res.ok) throw new Error(json.error || `Server error (${res.status})`)
+
+      const answerText = json.fallback ? (json.answer ?? '') : (json.result?.summary ?? '')
+      setHistory((h) => [
+        ...h,
+        {role: 'user', content: text},
+        {role: 'assistant', content: answerText},
+      ])
       if (json.fallback) setFallbackAnswer(json.answer ?? '')
       else setResult(json.result ?? null)
     } catch (e) {
@@ -216,6 +234,13 @@ function App() {
                   </ul>
                 </motion.div>
               )}
+
+              <div className="mt-6 flex flex-col gap-4">
+                <FollowUp onAsk={(q) => check(q, true)} loading={loading} />
+                <div className="flex justify-center">
+                  <WhatsAppShare result={result} />
+                </div>
+              </div>
 
               {result.disclaimer && (
                 <p className="mt-8 text-center text-xs text-stone-400 italic">

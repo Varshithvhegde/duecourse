@@ -40,6 +40,7 @@ const FORMAT_PROMPT = `Now produce the final answer as ONE JSON object (no markd
       "name": "PM-KISAN",
       "fullName": "Pradhan Mantri Kisan Samman Nidhi",
       "verdict": "likely",               // "likely" | "possible" | "unlikely"
+      "excludedBy": null,                // when verdict is "unlikely" because of an EXCLUSION rule: the plainLanguage of that rule, else null
       "reason": "Plain-language explanation citing the specific rules that decided it",
       "benefit": "₹6,000/year in three installments",
       "benefitAmountAnnual": 6000,       // number or null
@@ -56,6 +57,7 @@ const FORMAT_PROMPT = `Now produce the final answer as ONE JSON object (no markd
 
 Rules:
 - Only schemes you actually retrieved from the dataset. Never invent schemes, amounts, or rules.
+- When a scheme is "unlikely" because an exclusion rule (isExclusion: true) matched the citizen, set "excludedBy" to that rule's plainLanguage text and say so in the reason.
 - Order schemes: "likely" first, then "possible", then "unlikely".
 - Include at most 8 schemes, best matches first.
 - If some fact was missing to decide a scheme, use verdict "possible" and note it in missingInfo.
@@ -97,13 +99,23 @@ function extractJson(text: string): AgentAnswer | null {
 }
 
 export async function POST(req: Request) {
-  const {message, lang} = await req.json()
+  const {message, lang, history} = await req.json()
   if (!message || typeof message !== 'string') {
     return Response.json({error: 'message is required'}, {status: 400})
   }
   const languageNote =
     lang === 'kn'
       ? '\n\nIMPORTANT: Write the entire answer in Kannada (ಕನ್ನಡ) — summary, reasons, steps, everything except scheme names and proper nouns, which stay in English.'
+      : ''
+
+  // Follow-up questions arrive with prior conversation turns — the agent
+  // refines its earlier analysis instead of starting from scratch.
+  const historyNote =
+    Array.isArray(history) && history.length > 0
+      ? `\n\nConversation so far (the citizen's follow-up refers to this):\n${history
+          .slice(-6)
+          .map((h: {role: string; content: string}) => `${h.role}: ${h.content}`)
+          .join('\n')}\n\nTreat the new message as a follow-up: reuse the citizen's attributes from earlier turns, only re-query for what changed.`
       : ''
 
   const mcpUrl = process.env.SANITY_CONTEXT_MCP_URL
@@ -132,7 +144,7 @@ export async function POST(req: Request) {
 
     const result = await generateText({
       model: inception(MODEL),
-      system: SYSTEM_PROMPT + languageNote,
+      system: SYSTEM_PROMPT + languageNote + historyNote,
       prompt: message,
       tools,
       stopWhen: stepCountIs(12),

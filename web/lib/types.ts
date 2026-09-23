@@ -2,6 +2,7 @@ export interface SchemeResult {
   name: string
   fullName?: string
   verdict: 'likely' | 'possible' | 'unlikely'
+  excludedBy?: string | null
   reason: string
   benefit?: string
   benefitAmountAnnual?: number | null

@@ -92,6 +92,22 @@ export default function SchemeCard({scheme, index}: {scheme: SchemeResult; index
             className="overflow-hidden"
           >
             <div className="border-t border-stone-100 px-5 pt-4 pb-6 sm:px-6">
+              {scheme.excludedBy && (
+                <motion.div
+                  initial={{opacity: 0, scale: 0.97}}
+                  animate={{opacity: 1, scale: 1}}
+                  transition={{type: 'spring', stiffness: 300, damping: 24}}
+                  className="mb-4 flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4"
+                >
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-600 text-xs font-bold text-white">
+                    ✕
+                  </span>
+                  <div>
+                    <p className="text-sm font-bold text-red-900">{t.disqualifiedBy}</p>
+                    <p className="mt-0.5 text-sm text-red-800">{scheme.excludedBy}</p>
+                  </div>
+                </motion.div>
+              )}
               <p className="text-sm leading-relaxed text-stone-600">{scheme.reason}</p>
 
               {scheme.documents && scheme.documents.length > 0 && (

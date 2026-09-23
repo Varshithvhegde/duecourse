@@ -20,6 +20,7 @@ const STRINGS = {
       {label: 'New graduate, Bengaluru', text: 'I just finished my degree in Bengaluru this year and I am still looking for a job.'},
       {label: 'Delivery rider, expecting a child', text: 'My wife is pregnant with our first child. I work as a delivery rider, no PF or anything.'},
       {label: 'BPL family, elderly mother', text: 'We are a BPL family of five in Kalaburagi. My mother is 65 and has no pension.'},
+      {label: 'Farmer with a government job', text: 'I am a farmer with 2 acres of land in Karnataka, but I also work as a government clerk. What schemes can I get?'},
     ],
     stages: [
       'Reading the scheme database…',
@@ -43,6 +44,12 @@ const STRINGS = {
       'DueCourse is an information tool, not legal or financial advice. Final eligibility is decided by the administering department.',
     footer: 'Built on Sanity structured content — every claim links to its official source.',
     schemesFound: 'schemes matched to you',
+    disqualifiedBy: 'Disqualifying rule',
+    followUpTitle: 'Ask a follow-up',
+    followUpPlaceholder: 'e.g. What about scholarships for my daughters?',
+    followUpCta: 'Ask',
+    whatsapp: 'Share on WhatsApp',
+    whatsappHeader: '*My welfare scheme results (DueCourse)*',
   },
   kn: {
     tagline: 'ಭಾರತದಲ್ಲಿ 4,700+ ಕಲ್ಯಾಣ ಯೋಜನೆಗಳಿವೆ',
@@ -59,6 +66,7 @@ const STRINGS = {
       {label: 'ಹೊಸ ಪದವೀಧರ, ಬೆಂಗಳೂರು', text: 'I just finished my degree in Bengaluru this year and I am still looking for a job.'},
       {label: 'ಡೆಲಿವರಿ ಸಿಬ್ಬಂದಿ, ಮಗು ನಿರೀಕ್ಷೆ', text: 'My wife is pregnant with our first child. I work as a delivery rider, no PF or anything.'},
       {label: 'BPL ಕುಟುಂಬ, ವೃದ್ಧ ತಾಯಿ', text: 'We are a BPL family of five in Kalaburagi. My mother is 65 and has no pension.'},
+      {label: 'ಸರ್ಕಾರಿ ಉದ್ಯೋಗಿಯ ರೈತ', text: 'I am a farmer with 2 acres of land in Karnataka, but I also work as a government clerk. What schemes can I get?'},
     ],
     stages: [
       'ಯೋಜನೆಗಳ ದತ್ತಾಂಶವನ್ನು ಓದಲಾಗುತ್ತಿದೆ…',
@@ -82,6 +90,12 @@ const STRINGS = {
       'DueCourse ಒಂದು ಮಾಹಿತಿ ಸಾಧನ, ಕಾನೂನು ಅಥವಾ ಹಣಕಾಸು ಸಲಹೆಯಲ್ಲ. ಅಂತಿಮ ಅರ್ಹತೆಯನ್ನು ಸಂಬಂಧಪಟ್ಟ ಇಲಾಖೆ ನಿರ್ಧರಿಸುತ್ತದೆ.',
     footer: 'Sanity ರಚನಾತ್ಮಕ ವಿಷಯದ ಮೇಲೆ ನಿರ್ಮಿತ — ಪ್ರತಿ ಹೇಳಿಕೆ ಅಧಿಕೃತ ಮೂಲಕ್ಕೆ ಸಂಪರ್ಕ ಹೊಂದಿದೆ.',
     schemesFound: 'ಯೋಜನೆಗಳು ನಿಮಗೆ ಹೊಂದಿಕೆಯಾದವು',
+    disqualifiedBy: 'ಅನರ್ಹಗೊಳಿಸುವ ನಿಯಮ',
+    followUpTitle: 'ಮುಂದಿನ ಪ್ರಶ್ನೆ ಕೇಳಿ',
+    followUpPlaceholder: 'ಉದಾ: ನನ್ನ ಮಗಳಿಗೆ ವಿದ್ಯಾರ್ಥಿವೇತನ ಇದೆಯೇ?',
+    followUpCta: 'ಕೇಳಿ',
+    whatsapp: 'WhatsApp ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ',
+    whatsappHeader: '*ನನ್ನ ಕಲ್ಯಾಣ ಯೋಜನೆ ಫಲಿತಾಂಶಗಳು (DueCourse)*',
   },
 } as const
 
