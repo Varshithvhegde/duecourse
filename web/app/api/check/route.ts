@@ -2,6 +2,55 @@ import {createOpenAICompatible} from '@ai-sdk/openai-compatible'
 import {createMCPClient} from '@ai-sdk/mcp'
 import {generateText, stepCountIs} from 'ai'
 
+// Direct Sanity API access for post-processing enrichment (URLs the model
+// tends to drop). Uses the same session token as the MCP connection.
+const SANITY_PROJECT = 'qldtw72y'
+const SANITY_DATASET = 'production'
+
+interface SanitySchemeRow {
+  name: string
+  shortTitle?: string
+  sources?: {url?: string}[]
+  applicationSteps?: {url?: string}[]
+}
+
+/** Fetch apply/source URLs for scheme names straight from the dataset. */
+async function enrichWithDatasetUrls(
+  schemes: SchemeResult[],
+  token: string,
+): Promise<SchemeResult[]> {
+  try {
+    const query = `*[_type == "scheme"]{name, shortTitle, sources[]{url}, applicationSteps[]{url}}`
+    const res = await fetch(
+      `https://${SANITY_PROJECT}.api.sanity.io/v2023-05-03/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`,
+      {headers: {Authorization: `Bearer ${token}`}},
+    )
+    if (!res.ok) return schemes
+    const {result: rows} = (await res.json()) as {result: SanitySchemeRow[]}
+
+    const normalize = (s: string) =>
+      s.toLowerCase().replace(/[^a-z0-9]/g, '')
+
+    return schemes.map((scheme) => {
+      const candidates = [scheme.name, scheme.fullName ?? ''].map(normalize).filter(Boolean)
+      const row = rows.find((r) => {
+        const rowNames = [r.name, r.shortTitle ?? ''].map(normalize).filter(Boolean)
+        return candidates.some((c) => rowNames.some((rn) => rn.includes(c) || c.includes(rn)))
+      })
+      if (!row) return scheme
+
+      const applyUrl =
+        scheme.applyUrl ||
+        row.applicationSteps?.find((s) => s.url)?.url ||
+        undefined
+      const source = scheme.source || row.sources?.find((s) => s.url)?.url || undefined
+      return {...scheme, applyUrl, source}
+    })
+  } catch {
+    return schemes
+  }
+}
+
 export const maxDuration = 120
 
 // Inception Labs (Mercury diffusion LLMs) — OpenAI-compatible endpoint.
@@ -172,6 +221,9 @@ export async function POST(req: Request) {
 
       const structured = extractJson(final.text)
       if (structured) {
+        // Attach real apply/source URLs from the dataset — the model often
+        // drops them when reformatting, and they are the whole point.
+        structured.schemes = await enrichWithDatasetUrls(structured.schemes, mcpToken)
         return Response.json({fallback: false, result: structured, toolCalls})
       }
       // Model didn't produce valid JSON — degrade to markdown rendering
