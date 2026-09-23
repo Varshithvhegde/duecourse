@@ -97,10 +97,14 @@ function extractJson(text: string): AgentAnswer | null {
 }
 
 export async function POST(req: Request) {
-  const {message} = await req.json()
+  const {message, lang} = await req.json()
   if (!message || typeof message !== 'string') {
     return Response.json({error: 'message is required'}, {status: 400})
   }
+  const languageNote =
+    lang === 'kn'
+      ? '\n\nIMPORTANT: Write the entire answer in Kannada (ಕನ್ನಡ) — summary, reasons, steps, everything except scheme names and proper nouns, which stay in English.'
+      : ''
 
   const mcpUrl = process.env.SANITY_CONTEXT_MCP_URL
   const mcpToken = process.env.SANITY_CONTEXT_TOKEN
@@ -128,7 +132,7 @@ export async function POST(req: Request) {
 
     const result = await generateText({
       model: inception(MODEL),
-      system: SYSTEM_PROMPT,
+      system: SYSTEM_PROMPT + languageNote,
       prompt: message,
       tools,
       stopWhen: stepCountIs(12),
@@ -138,11 +142,11 @@ export async function POST(req: Request) {
     // agent already produced prose — we always normalize to the card schema.
     const final = await generateText({
       model: inception(MODEL),
-      system: SYSTEM_PROMPT,
+      system: SYSTEM_PROMPT + languageNote,
       messages: [
         {role: 'user', content: message},
         ...(result.response?.messages ?? []),
-        {role: 'user', content: FORMAT_PROMPT},
+        {role: 'user', content: FORMAT_PROMPT + languageNote},
       ],
     })
 

@@ -12,6 +12,7 @@
     "@ai-sdk/openai-compatible": "^3.0.53",
     "@modelcontextprotocol/sdk": "^1.17.0",
     "ai": "^7.0.109",
+    "framer-motion": "^13.4.1",
     "next": "^15.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
