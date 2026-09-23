@@ -138,33 +138,37 @@ export async function POST(req: Request) {
       stopWhen: stepCountIs(12),
     })
 
-    // Final formatting pass: tools off, structured JSON out. Runs even if the
-    // agent already produced prose — we always normalize to the card schema.
-    const final = await generateText({
-      model: inception(MODEL),
-      system: SYSTEM_PROMPT + languageNote,
-      messages: [
-        {role: 'user', content: message},
-        ...(result.response?.messages ?? []),
-        {role: 'user', content: FORMAT_PROMPT + languageNote},
-      ],
-    })
+    // Final formatting pass: tools off, structured JSON out. We pass ONLY the
+    // agent's final text (not the raw tool-call transcript — Mercury 503s on
+    // multi-turn tool history in a tools-off request).
+    const agentAnswer = result.text || '(the agent returned no text)'
+    const toolCalls = result.steps.flatMap((s) =>
+      s.toolCalls.map((tc) => ({tool: tc.toolName})),
+    )
 
-    const structured = extractJson(final.text)
-    if (!structured) {
-      // Model didn't cooperate — degrade gracefully to markdown rendering
-      return Response.json({
-        fallback: true,
-        answer: final.text || result.text,
-        toolCalls: result.steps.flatMap((s) => s.toolCalls.map((tc) => ({tool: tc.toolName}))),
+    try {
+      const final = await generateText({
+        model: inception(MODEL),
+        system: 'You reformat eligibility answers into strict JSON.' + languageNote,
+        messages: [
+          {
+            role: 'user',
+            content: `The citizen asked: "${message}"\n\nThe eligibility agent's answer:\n${agentAnswer}\n\n${FORMAT_PROMPT}${languageNote}`,
+          },
+        ],
       })
-    }
 
-    return Response.json({
-      fallback: false,
-      result: structured,
-      toolCalls: result.steps.flatMap((s) => s.toolCalls.map((tc) => ({tool: tc.toolName}))),
-    })
+      const structured = extractJson(final.text)
+      if (structured) {
+        return Response.json({fallback: false, result: structured, toolCalls})
+      }
+      // Model didn't produce valid JSON — degrade to markdown rendering
+      return Response.json({fallback: true, answer: final.text || agentAnswer, toolCalls})
+    } catch (formatErr) {
+      // Formatting pass failed (provider hiccup) — still show the agent's answer
+      console.warn('[/api/check] formatting pass failed, using raw answer', formatErr)
+      return Response.json({fallback: true, answer: agentAnswer, toolCalls})
+    }
   } catch (err) {
     // Always return JSON so the frontend never hangs on a bare 500
     const message =
