@@ -1,6 +1,6 @@
 'use client'
 
-import {createContext, useContext, useState, type ReactNode} from 'react'
+import {createContext, useContext, useEffect, useState, type ReactNode} from 'react'
 
 export type Lang = 'en' | 'kn'
 
@@ -108,7 +108,19 @@ const LangContext = createContext<{lang: Lang; setLang: (l: Lang) => void; t: St
 })
 
 export function LangProvider({children}: {children: ReactNode}) {
-  const [lang, setLang] = useState<Lang>('en')
+  const [lang, setLangState] = useState<Lang>('en')
+
+  // Restore the visitor's language choice on first paint
+  useEffect(() => {
+    const saved = localStorage.getItem('entitled-lang')
+    if (saved === 'kn' || saved === 'en') setLangState(saved)
+  }, [])
+
+  const setLang = (l: Lang) => {
+    setLangState(l)
+    localStorage.setItem('entitled-lang', l)
+  }
+
   return (
     <LangContext.Provider value={{lang, setLang, t: STRINGS[lang] as Strings}}>
       {children}
